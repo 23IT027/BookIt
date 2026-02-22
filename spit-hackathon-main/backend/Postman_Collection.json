@@ -1,0 +1,1230 @@
+{
+  "info": {
+    "name": "Appointment Booking Backend API",
+    "description": "Complete API collection for MERN appointment booking system with RBAC, Redis locking, Stripe payments, and WebSocket support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "appointment-booking-v1"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{authToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3001",
+      "type": "string"
+    },
+    {
+      "key": "authToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "customerId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "organiserId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "adminId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "providerId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "appointmentTypeId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "availabilityId",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "bookingId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Authentication",
+      "item": [
+        {
+          "name": "Signup - Customer",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('authToken', response.data.token);",
+                  "    pm.collectionVariables.set('customerId', response.data.user._id);",
+                  "    console.log('Customer token saved:', response.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Customer\",\n  \"email\": \"customer@test.com\",\n  \"password\": \"Password123!\",\n  \"phone\": \"+1234567890\",\n  \"role\": \"CUSTOMER\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "signup"]
+            },
+            "description": "Register a new customer account"
+          },
+          "response": []
+        },
+        {
+          "name": "Signup - Organiser",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('authToken', response.data.token);",
+                  "    pm.collectionVariables.set('organiserId', response.data.user._id);",
+                  "    console.log('Organiser token saved:', response.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Organiser\",\n  \"email\": \"organiser@test.com\",\n  \"password\": \"Password123!\",\n  \"phone\": \"+1234567891\",\n  \"role\": \"ORGANISER\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/signup",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "signup"]
+            },
+            "description": "Register a new organiser account"
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('authToken', response.data.token);",
+                  "    console.log('Login successful. Token saved:', response.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"organiser@test.com\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Login with email and password"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "me"]
+            },
+            "description": "Get currently authenticated user details"
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('authToken', response.data.token);",
+                  "    console.log('Token refreshed:', response.data.token);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/refresh",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "refresh"]
+            },
+            "description": "Refresh authentication token"
+          },
+          "response": []
+        }
+      ],
+      "description": "User authentication endpoints"
+    },
+    {
+      "name": "2. Providers",
+      "item": [
+        {
+          "name": "Create Provider",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    // Response format: {success, statusCode, message, data: {provider: {...}}}",
+                  "    const provider = response.data.provider;",
+                  "    if (provider && provider._id) {",
+                  "        const providerId = provider._id;",
+                  "        pm.collectionVariables.set('providerId', providerId);",
+                  "        console.log('✅ Provider ID saved:', providerId);",
+                  "        console.log('✅ ID length:', providerId.length, '(expected: 24)');",
+                  "        ",
+                  "        // Validate ObjectId length",
+                  "        if (providerId.length !== 24) {",
+                  "            console.error('❌ WARNING: Provider ID has wrong length!');",
+                  "            console.error('   Expected: 24 characters');",
+                  "            console.error('   Got:', providerId.length, 'characters');",
+                  "        }",
+                  "    } else {",
+                  "        console.error('❌ Could not extract provider ID from response:', response);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Healthcare Clinic\",\n  \"description\": \"Professional healthcare services\",\n  \"contactEmail\": \"contact@clinic.com\",\n  \"contactPhone\": \"+1234567892\",\n  \"address\": \"123 Main St, City, State 12345\",\n  \"timezone\": \"America/New_York\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/providers",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "providers"]
+            },
+            "description": "Create a new provider (ORGANISER or ADMIN only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Providers",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/providers?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "providers"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "List all providers (ownership filtered for ORGANISER)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Provider by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/providers/{{providerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "providers", "{{providerId}}"]
+            },
+            "description": "Get single provider details"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Provider",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Healthcare Clinic\",\n  \"description\": \"Updated description\",\n  \"contactPhone\": \"+9876543210\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/providers/{{providerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "providers", "{{providerId}}"]
+            },
+            "description": "Update provider using PATCH (owner or ADMIN only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Provider",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/providers/{{providerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "providers", "{{providerId}}"]
+            },
+            "description": "Permanently delete provider from database (owner or ADMIN only)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Provider management endpoints"
+    },
+    {
+      "name": "3. Appointment Types",
+      "item": [
+        {
+          "name": "Create Appointment Type",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    const appointmentType = response.data.appointmentType;",
+                  "    if (appointmentType && appointmentType._id) {",
+                  "        pm.collectionVariables.set('appointmentTypeId', appointmentType._id);",
+                  "        console.log('✅ Appointment Type ID saved:', appointmentType._id);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"providerId\": \"{{providerId}}\",\n  \"title\": \"General Consultation\",\n  \"description\": \"30-minute general health consultation\",\n  \"durationMinutes\": 30,\n  \"bufferMinutes\": 10,\n  \"capacity\": 1,\n  \"price\": 100.00,\n  \"currency\": \"USD\",\n  \"published\": true,\n  \"category\": \"Healthcare\",\n  \"tags\": [\"consultation\", \"general\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/appointment-types",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "appointment-types"]
+            },
+            "description": "Create a new appointment type (ORGANISER or ADMIN only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Appointment Type with Image",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Validate providerId before sending request",
+                  "const providerId = pm.collectionVariables.get('providerId');",
+                  "",
+                  "if (!providerId) {",
+                  "    console.error('❌ providerId is empty! Run \"Create Provider\" first.');",
+                  "    throw new Error('Missing providerId variable. Please run \"Create Provider\" request first.');",
+                  "}",
+                  "",
+                  "if (providerId.length !== 24) {",
+                  "    console.error(`❌ providerId has wrong length: ${providerId.length} (expected 24)`);",
+                  "    console.error(`   Value: ${providerId}`);",
+                  "    throw new Error(`Invalid providerId length: ${providerId.length}. MongoDB ObjectIds must be exactly 24 characters.`);",
+                  "}",
+                  "",
+                  "console.log('✅ providerId validated:', providerId);"
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    const appointmentType = response.data.appointmentType;",
+                  "    if (appointmentType && appointmentType._id) {",
+                  "        pm.collectionVariables.set('appointmentTypeId', appointmentType._id);",
+                  "        console.log('✅ Appointment Type with image created:', appointmentType._id);",
+                  "        if (appointmentType.images && appointmentType.images.length > 0) {",
+                  "            console.log('✅ Images uploaded:', appointmentType.images.length);",
+                  "        }",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "providerId",
+                  "value": "{{providerId}}",
+                  "type": "text"
+                },
+                {
+                  "key": "title",
+                  "value": "Dental Checkup",
+                  "type": "text"
+                },
+                {
+                  "key": "description",
+                  "value": "Complete dental examination",
+                  "type": "text"
+                },
+                {
+                  "key": "durationMinutes",
+                  "value": "45",
+                  "type": "text"
+                },
+                {
+                  "key": "price",
+                  "value": "150",
+                  "type": "text"
+                },
+                {
+                  "key": "currency",
+                  "value": "USD",
+                  "type": "text"
+                },
+                {
+                  "key": "published",
+                  "value": "true",
+                  "type": "text"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "src": [],
+                  "description": "Upload image file here"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/appointment-types/with-images",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "appointment-types", "with-images"]
+            },
+            "description": "Create appointment type with image upload using multipart/form-data"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Appointment Types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/appointment-types?providerId={{providerId}}&page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "appointment-types"],
+              "query": [
+                {
+                  "key": "providerId",
+                  "value": "{{providerId}}",
+                  "description": "Filter by provider"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "List appointment types (published only for CUSTOMER)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Appointment Type by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/appointment-types/{{appointmentTypeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "appointment-types", "{{appointmentTypeId}}"]
+            },
+            "description": "Get single appointment type details"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Appointment Type",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Consultation\",\n  \"price\": 120.00,\n  \"published\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/appointment-types/{{appointmentTypeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "appointment-types", "{{appointmentTypeId}}"]
+            },
+            "description": "Update appointment type (owner or ADMIN only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Appointment Type",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/appointment-types/{{appointmentTypeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "appointment-types", "{{appointmentTypeId}}"]
+            },
+            "description": "Soft delete appointment type"
+          },
+          "response": []
+        }
+      ],
+      "description": "Appointment type management"
+    },
+    {
+      "name": "4. Availability & Slots",
+      "item": [
+        {
+          "name": "Create Availability Rule",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    const availability = response.data.availabilityRule;",
+                  "    if (availability && availability._id) {",
+                  "        pm.collectionVariables.set('availabilityId', availability._id);",
+                  "        console.log('✅ Availability ID saved:', availability._id);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"providerId\": \"{{providerId}}\",\n  \"dayOfWeek\": 2,\n  \"startTime\": \"09:00\",\n  \"endTime\": \"17:00\",\n  \"effectiveFrom\": \"2025-12-20\",\n  \"effectiveTo\": null,\n  \"exceptionDates\": []\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/availability",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "availability"]
+            },
+            "description": "Create availability rule for a provider (0=Sunday, 6=Saturday)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Provider Availability",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/availability/provider/{{providerId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "availability", "provider", "{{providerId}}"]
+            },
+            "description": "Get all availability rules for a provider"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Availability Rule",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"startTime\": \"08:00\",\n  \"endTime\": \"18:00\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/availability/{{availabilityId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "availability", "{{availabilityId}}"]
+            },
+            "description": "Update availability rule"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Availability Rule",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/availability/{{availabilityId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "availability", "{{availabilityId}}"]
+            },
+            "description": "Delete availability rule"
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Available Slots",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "// Validate providerId exists",
+                  "const providerId = pm.collectionVariables.get('providerId');",
+                  "",
+                  "if (!providerId) {",
+                  "    console.error('❌ providerId is empty! Run \"Create Provider\" first.');",
+                  "    throw new Error('Missing providerId variable. Please run \"Create Provider\" request first.');",
+                  "}",
+                  "",
+                  "if (providerId.length !== 24) {",
+                  "    console.error(`❌ providerId has wrong length: ${providerId.length} (expected 24)`);",
+                  "    console.error(`   Value: ${providerId}`);",
+                  "    throw new Error(`Invalid providerId length: ${providerId.length}. MongoDB ObjectIds must be exactly 24 characters.`);",
+                  "}",
+                  "",
+                  "console.log('✅ providerId validated:', providerId);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/slots/{{providerId}}?date=2025-12-23&appointmentTypeId={{appointmentTypeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "slots", "{{providerId}}"],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "2025-12-23",
+                  "description": "Date in YYYY-MM-DD format (required)",
+                  "disabled": false
+                },
+                {
+                  "key": "appointmentTypeId",
+                  "value": "{{appointmentTypeId}}",
+                  "description": "Optional: Filter by appointment type",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Generate available time slots for a specific date. Requires providerId in path and date in query."
+          },
+          "response": []
+        },
+        {
+          "name": "Check Slot Availability",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/slots/{{providerId}}/check?date=2025-12-23&startTime=10:00&endTime=11:00",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "slots", "{{providerId}}", "check"],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "2025-12-23",
+                  "description": "Date in YYYY-MM-DD format"
+                },
+                {
+                  "key": "startTime",
+                  "value": "10:00",
+                  "description": "Start time in HH:mm format"
+                },
+                {
+                  "key": "endTime",
+                  "value": "11:00",
+                  "description": "End time in HH:mm format"
+                },
+                {
+                  "key": "appointmentTypeId",
+                  "value": "{{appointmentTypeId}}",
+                  "description": "Optional: Appointment type ID",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Check if a specific time slot is available"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Provider Schedule",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/slots/{{providerId}}/schedule?startDate=2025-12-20&endDate=2025-12-27",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "slots", "{{providerId}}", "schedule"],
+              "query": [
+                {
+                  "key": "startDate",
+                  "value": "2025-12-20",
+                  "description": "Start date in YYYY-MM-DD format"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2025-12-27",
+                  "description": "End date in YYYY-MM-DD format"
+                }
+              ]
+            },
+            "description": "Get provider's complete schedule for a date range"
+          },
+          "response": []
+        }
+      ],
+      "description": "Availability rules and slot generation"
+    },
+    {
+      "name": "5. Bookings",
+      "item": [
+        {
+          "name": "Create Booking",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    const booking = response.data.booking;",
+                  "    if (booking && booking._id) {",
+                  "        pm.collectionVariables.set('bookingId', booking._id);",
+                  "        console.log('✅ Booking ID saved:', booking._id);",
+                  "    }",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"providerId\": \"{{providerId}}\",\n  \"appointmentTypeId\": \"{{appointmentTypeId}}\",\n  \"startTime\": \"2025-12-23T10:00:00.000Z\",\n  \"customerNotes\": \"First consultation\",\n  \"answers\": []\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookings"]
+            },
+            "description": "Create a new booking (with Redis locking to prevent double booking)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get My Bookings (Customer)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/my-bookings?status=PENDING",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookings", "my-bookings"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "PENDING",
+                  "description": "Filter by status: PENDING, CONFIRMED, COMPLETED, CANCELLED"
+                }
+              ]
+            },
+            "description": "Get bookings for authenticated customer"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Provider Bookings (Organiser)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/provider/{{providerId}}?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookings", "provider", "{{providerId}}"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            },
+            "description": "Get all bookings for a provider (ORGANISER or ADMIN)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Booking by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/{{bookingId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookings", "{{bookingId}}"]
+            },
+            "description": "Get single booking details"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Booking Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"CONFIRMED\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/{{bookingId}}/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookings", "{{bookingId}}", "status"]
+            },
+            "description": "Update booking status (ORGANISER or ADMIN only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Booking",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/{{bookingId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookings", "{{bookingId}}"]
+            },
+            "description": "Cancel a booking (releases Redis lock)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Booking management with concurrency control"
+    },
+    {
+      "name": "6. Payments (Stripe)",
+      "item": [
+        {
+          "name": "Create Checkout Session",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookingId\": \"{{bookingId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/create-checkout-session",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "create-checkout-session"]
+            },
+            "description": "Create Stripe checkout session for a booking"
+          },
+          "response": []
+        },
+        {
+          "name": "Stripe Webhook (Simulate)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "stripe-signature",
+                "value": "test_signature"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"checkout.session.completed\",\n  \"data\": {\n    \"object\": {\n      \"id\": \"cs_test_123\",\n      \"payment_status\": \"paid\",\n      \"metadata\": {\n        \"bookingId\": \"{{bookingId}}\"\n      }\n    }\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/webhook",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "webhook"]
+            },
+            "description": "Stripe webhook endpoint (for testing - use Stripe CLI in production)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Payment Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/{{bookingId}}/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "{{bookingId}}", "status"]
+            },
+            "description": "Get payment status for a booking"
+          },
+          "response": []
+        },
+        {
+          "name": "Request Refund",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookingId\": \"{{bookingId}}\",\n  \"reason\": \"Customer requested cancellation\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/refund",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "refund"]
+            },
+            "description": "Request refund for a cancelled booking"
+          },
+          "response": []
+        }
+      ],
+      "description": "Stripe payment integration"
+    },
+    {
+      "name": "7. Admin",
+      "item": [
+        {
+          "name": "Get System Analytics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/analytics?startDate=2025-12-01&endDate=2025-12-31",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "analytics"],
+              "query": [
+                {
+                  "key": "startDate",
+                  "value": "2025-12-01"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2025-12-31"
+                }
+              ]
+            },
+            "description": "Get system analytics (ADMIN only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users?role=CUSTOMER&page=1&limit=20",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users"],
+              "query": [
+                {
+                  "key": "role",
+                  "value": "CUSTOMER",
+                  "description": "Filter by role"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            },
+            "description": "List all users (ADMIN only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update User Role",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"ORGANISER\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/users/{{customerId}}/role",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "users", "{{customerId}}", "role"]
+            },
+            "description": "Change user role (ADMIN only)"
+          },
+          "response": []
+        },
+        {
+          "name": "Generate Reports",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/reports?type=bookings&startDate=2025-12-01&endDate=2025-12-31",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "reports"],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "bookings",
+                  "description": "Report type: bookings, revenue, users"
+                },
+                {
+                  "key": "startDate",
+                  "value": "2025-12-01"
+                },
+                {
+                  "key": "endDate",
+                  "value": "2025-12-31"
+                }
+              ]
+            },
+            "description": "Generate system reports (ADMIN only)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Admin management endpoints"
+    },
+    {
+      "name": "8. Testing - Concurrency",
+      "item": [
+        {
+          "name": "Test Double Booking Prevention",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"providerId\": \"{{providerId}}\",\n  \"appointmentTypeId\": \"{{appointmentTypeId}}\",\n  \"startTime\": \"2025-12-23T14:00:00.000Z\",\n  \"customerNotes\": \"Testing concurrent booking\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookings"]
+            },
+            "description": "Try to book the same slot simultaneously with multiple requests to test Redis locking"
+          },
+          "response": []
+        },
+        {
+          "name": "Check Redis Lock Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/bookings/debug/locks",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "bookings", "debug", "locks"]
+            },
+            "description": "Debug endpoint to check active Redis locks (if implemented)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Test concurrent booking scenarios"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Auto-set Authorization header if token exists",
+          "const token = pm.collectionVariables.get('authToken');",
+          "if (token) {",
+          "    pm.request.headers.add({",
+          "        key: 'Authorization',",
+          "        value: 'Bearer ' + token",
+          "    });",
+          "}"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Log response for debugging",
+          "console.log('Status:', pm.response.code);",
+          "console.log('Response:', pm.response.json());"
+        ]
+      }
+    }
+  ]
+}

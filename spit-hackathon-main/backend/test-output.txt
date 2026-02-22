@@ -1,0 +1,947 @@
+
+> appointment-booking-backend@1.0.0 test
+> jest --runInBand --detectOpenHandles --forceExit
+
+  console.log
+    ✅ Stripe initialized
+
+      at log (src/config/stripe.js:16:13)
+
+  console.log
+    📁 Test MongoDB connected
+
+      at Object.log (tests/setup.js:83:11)
+
+  console.log
+    🔄 Test Redis connected
+
+      at Object.log (tests/setup.js:94:13)
+
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/providers HTTP/1.1" 403 134 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/providers HTTP/1.1" 201 432 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/appointment-types HTTP/1.1" 403 134 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/providers HTTP/1.1" 201 432 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/availability HTTP/1.1" 403 134 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:56 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/providers HTTP/1.1" 201 432 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "GET /api/appointment-types HTTP/1.1" 200 228 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/providers HTTP/1.1" 201 432 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "GET /api/appointment-types HTTP/1.1" 200 228 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/providers HTTP/1.1" 201 432 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/availability HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "PATCH /api/bookings/fake-id/status HTTP/1.1" 403 134 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:57 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/providers HTTP/1.1" 201 455 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/providers HTTP/1.1" 201 460 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "PUT /api/providers/undefined HTTP/1.1" 404 130 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+  console.error
+    Error: CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Provider"
+        at SchemaObjectId.Object.<anonymous>.SchemaObjectId.cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schema/objectId.js:253:11)
+        at SchemaObjectId.Object.<anonymous>.SchemaType.applySetters (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schemaType.js:1288:12)
+        at SchemaObjectId.Object.<anonymous>.SchemaType.castForQuery (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schemaType.js:1724:17)
+        at cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/cast.js:390:32)
+        at model.Query.Object.<anonymous>.Query.cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:5060:12)
+        at model.Query.Object.<anonymous>.Query._castConditions (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:2374:10)
+        at model.Query._findOne (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:2697:8)
+        at model.Query.exec (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:4627:80)
+        at processTicksAndRejections (node:internal/process/task_queues:105:5)
+        at deleteProvider (/Users/aryanpatel/Desktop/spit hackathon/backend/src/controllers/provider.controller.js:148:20) {
+      stringValue: '"undefined"',
+      messageFormat: undefined,
+      kind: 'ObjectId',
+      value: 'undefined',
+      path: '_id',
+      reason: BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+          at new ObjectId (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/bson/src/objectid.ts:120:15)
+          at castObjectId (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/cast/objectid.js:25:12)
+          at SchemaObjectId.Object.<anonymous>.SchemaObjectId.cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schema/objectId.js:251:12)
+          at SchemaObjectId.Object.<anonymous>.SchemaType.applySetters (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schemaType.js:1288:12)
+          at SchemaObjectId.Object.<anonymous>.SchemaType.castForQuery (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schemaType.js:1724:17)
+          at cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/cast.js:390:32)
+          at model.Query.Object.<anonymous>.Query.cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:5060:12)
+          at model.Query.Object.<anonymous>.Query._castConditions (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:2374:10)
+          at model.Query._findOne (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:2697:8)
+          at model.Query.exec (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:4627:80)
+          at processTicksAndRejections (node:internal/process/task_queues:105:5)
+          at deleteProvider (/Users/aryanpatel/Desktop/spit hackathon/backend/src/controllers/provider.controller.js:148:20),
+      valueType: 'string'
+    }
+
+       6 |  */
+       7 | const errorHandler = (err, req, res, next) => {
+    >  8 |   console.error('Error:', err);
+         |           ^
+       9 |
+      10 |   // Zod validation errors
+      11 |   if (err instanceof ZodError) {
+
+      at error (src/middlewares/error.middleware.js:8:11)
+      at newFn (node_modules/express-async-errors/index.js:16:20)
+      at Layer.handle_error (node_modules/express/lib/router/layer.js:71:5)
+      at trim_prefix (node_modules/express/lib/router/index.js:326:13)
+      at node_modules/express/lib/router/index.js:286:9
+      at Function.process_params (node_modules/express/lib/router/index.js:346:12)
+      at next (node_modules/express/lib/router/index.js:280:10)
+      at Layer.handle_error (node_modules/express/lib/router/layer.js:67:12)
+      at trim_prefix (node_modules/express/lib/router/index.js:326:13)
+      at node_modules/express/lib/router/index.js:286:9
+      at Function.process_params (node_modules/express/lib/router/index.js:346:12)
+      at Immediate.next (node_modules/express/lib/router/index.js:280:10)
+      at Immediate._onImmediate (node_modules/express/lib/router/index.js:646:15)
+
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "DELETE /api/providers/undefined HTTP/1.1" 400 108 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/providers HTTP/1.1" 201 443 "-" "-"
+  console.error
+    Error: CastError: Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "Provider"
+        at SchemaObjectId.Object.<anonymous>.SchemaObjectId.cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schema/objectId.js:253:11)
+        at SchemaObjectId.Object.<anonymous>.SchemaType.applySetters (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schemaType.js:1288:12)
+        at SchemaObjectId.Object.<anonymous>.SchemaType.castForQuery (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schemaType.js:1724:17)
+        at cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/cast.js:390:32)
+        at model.Query.Object.<anonymous>.Query.cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:5060:12)
+        at model.Query.Object.<anonymous>.Query._castConditions (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:2374:10)
+        at model.Query._findOne (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:2697:8)
+        at model.Query.exec (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:4627:80)
+        at processTicksAndRejections (node:internal/process/task_queues:105:5)
+        at getProviderById (/Users/aryanpatel/Desktop/spit hackathon/backend/src/controllers/provider.controller.js:81:20) {
+      stringValue: '"undefined"',
+      messageFormat: undefined,
+      kind: 'ObjectId',
+      value: 'undefined',
+      path: '_id',
+      reason: BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+          at new ObjectId (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/bson/src/objectid.ts:120:15)
+          at castObjectId (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/cast/objectid.js:25:12)
+          at SchemaObjectId.Object.<anonymous>.SchemaObjectId.cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schema/objectId.js:251:12)
+          at SchemaObjectId.Object.<anonymous>.SchemaType.applySetters (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schemaType.js:1288:12)
+          at SchemaObjectId.Object.<anonymous>.SchemaType.castForQuery (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schemaType.js:1724:17)
+          at cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/cast.js:390:32)
+          at model.Query.Object.<anonymous>.Query.cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:5060:12)
+          at model.Query.Object.<anonymous>.Query._castConditions (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:2374:10)
+          at model.Query._findOne (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:2697:8)
+          at model.Query.exec (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:4627:80)
+          at processTicksAndRejections (node:internal/process/task_queues:105:5)
+          at getProviderById (/Users/aryanpatel/Desktop/spit hackathon/backend/src/controllers/provider.controller.js:81:20),
+      valueType: 'string'
+    }
+
+       6 |  */
+       7 | const errorHandler = (err, req, res, next) => {
+    >  8 |   console.error('Error:', err);
+         |           ^
+       9 |
+      10 |   // Zod validation errors
+      11 |   if (err instanceof ZodError) {
+
+      at error (src/middlewares/error.middleware.js:8:11)
+      at newFn (node_modules/express-async-errors/index.js:16:20)
+      at Layer.handle_error (node_modules/express/lib/router/layer.js:71:5)
+      at trim_prefix (node_modules/express/lib/router/index.js:326:13)
+      at node_modules/express/lib/router/index.js:286:9
+      at Function.process_params (node_modules/express/lib/router/index.js:346:12)
+      at next (node_modules/express/lib/router/index.js:280:10)
+      at Layer.handle_error (node_modules/express/lib/router/layer.js:67:12)
+      at trim_prefix (node_modules/express/lib/router/index.js:326:13)
+      at node_modules/express/lib/router/index.js:286:9
+      at Function.process_params (node_modules/express/lib/router/index.js:346:12)
+      at next (node_modules/express/lib/router/index.js:280:10)
+      at node_modules/express/lib/router/index.js:646:15
+      at next (node_modules/express/lib/router/index.js:265:14)
+      at next (node_modules/express/lib/router/route.js:141:14)
+      at node_modules/express-async-errors/index.js:18:44
+
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "GET /api/providers/undefined HTTP/1.1" 400 108 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:58 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/providers HTTP/1.1" 201 447 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/providers HTTP/1.1" 201 435 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/providers HTTP/1.1" 201 435 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "GET /api/providers HTTP/1.1" 200 979 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/providers HTTP/1.1" 201 440 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/providers HTTP/1.1" 201 440 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "GET /api/providers HTTP/1.1" 200 989 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/providers HTTP/1.1" 201 448 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "PUT /api/providers/undefined HTTP/1.1" 404 130 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:12:59 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "POST /api/providers HTTP/1.1" 201 448 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "DELETE /api/providers/undefined HTTP/1.1" 401 100 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "GET /api/admin/analytics HTTP/1.1" 401 100 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "GET /api/admin/analytics HTTP/1.1" 403 121 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "GET /api/admin/users HTTP/1.1" 401 100 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:00 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "POST /api/providers HTTP/1.1" 201 441 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "GET /api/appointment-types HTTP/1.1" 200 228 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "POST /api/bookings HTTP/1.1" 401 103 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+  console.error
+    Error: CastError: Cast to ObjectId failed for value "fake-id" (type string) at path "_id" for model "Provider"
+        at SchemaObjectId.Object.<anonymous>.SchemaObjectId.cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schema/objectId.js:253:11)
+        at SchemaObjectId.Object.<anonymous>.SchemaType.applySetters (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schemaType.js:1288:12)
+        at SchemaObjectId.Object.<anonymous>.SchemaType.castForQuery (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schemaType.js:1724:17)
+        at cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/cast.js:390:32)
+        at model.Query.Object.<anonymous>.Query.cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:5060:12)
+        at model.Query.Object.<anonymous>.Query._castConditions (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:2374:10)
+        at model.Query._findOne (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:2697:8)
+        at model.Query.exec (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:4627:80)
+        at processTicksAndRejections (node:internal/process/task_queues:105:5)
+        at getProviderById (/Users/aryanpatel/Desktop/spit hackathon/backend/src/controllers/provider.controller.js:81:20) {
+      stringValue: '"fake-id"',
+      messageFormat: undefined,
+      kind: 'ObjectId',
+      value: 'fake-id',
+      path: '_id',
+      reason: BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+          at new ObjectId (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/bson/src/objectid.ts:120:15)
+          at castObjectId (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/cast/objectid.js:25:12)
+          at SchemaObjectId.Object.<anonymous>.SchemaObjectId.cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schema/objectId.js:251:12)
+          at SchemaObjectId.Object.<anonymous>.SchemaType.applySetters (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schemaType.js:1288:12)
+          at SchemaObjectId.Object.<anonymous>.SchemaType.castForQuery (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/schemaType.js:1724:17)
+          at cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/cast.js:390:32)
+          at model.Query.Object.<anonymous>.Query.cast (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:5060:12)
+          at model.Query.Object.<anonymous>.Query._castConditions (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:2374:10)
+          at model.Query._findOne (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:2697:8)
+          at model.Query.exec (/Users/aryanpatel/Desktop/spit hackathon/backend/node_modules/mongoose/lib/query.js:4627:80)
+          at processTicksAndRejections (node:internal/process/task_queues:105:5)
+          at getProviderById (/Users/aryanpatel/Desktop/spit hackathon/backend/src/controllers/provider.controller.js:81:20),
+      valueType: 'string'
+    }
+
+       6 |  */
+       7 | const errorHandler = (err, req, res, next) => {
+    >  8 |   console.error('Error:', err);
+         |           ^
+       9 |
+      10 |   // Zod validation errors
+      11 |   if (err instanceof ZodError) {
+
+      at error (src/middlewares/error.middleware.js:8:11)
+      at newFn (node_modules/express-async-errors/index.js:16:20)
+      at Layer.handle_error (node_modules/express/lib/router/layer.js:71:5)
+      at trim_prefix (node_modules/express/lib/router/index.js:326:13)
+      at node_modules/express/lib/router/index.js:286:9
+      at Function.process_params (node_modules/express/lib/router/index.js:346:12)
+      at next (node_modules/express/lib/router/index.js:280:10)
+      at Layer.handle_error (node_modules/express/lib/router/layer.js:67:12)
+      at trim_prefix (node_modules/express/lib/router/index.js:326:13)
+      at node_modules/express/lib/router/index.js:286:9
+      at Function.process_params (node_modules/express/lib/router/index.js:346:12)
+      at next (node_modules/express/lib/router/index.js:280:10)
+      at node_modules/express/lib/router/index.js:646:15
+      at next (node_modules/express/lib/router/index.js:265:14)
+      at next (node_modules/express/lib/router/route.js:141:14)
+      at node_modules/express-async-errors/index.js:18:44
+
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "GET /api/providers/fake-id HTTP/1.1" 400 106 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:01 +0000] "GET /api/auth/me HTTP/1.1" 401 100 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:02 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:02 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:02 +0000] "POST /api/auth/signup HTTP/1.1" 201 581 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:02 +0000] "GET /api/providers HTTP/1.1" 200 222 "-" "-"
+  console.log
+    ✅ Test cleanup complete
+
+      at Object.log (tests/setup.js:111:11)
+
+  console.log
+    ✅ Stripe initialized
+
+      at log (src/config/stripe.js:16:13)
+
+  console.log
+    📁 Test MongoDB connected
+
+      at Object.log (tests/setup.js:83:11)
+
+  console.log
+    🔄 Test Redis connected
+
+      at Object.log (tests/setup.js:94:13)
+
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:02 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:02 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:02 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:02 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:02 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:02 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:02 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:02 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:02 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:03 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "GET /api/admin/analytics HTTP/1.1" 401 100 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "GET /api/admin/analytics HTTP/1.1" 403 121 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "GET /api/admin/analytics HTTP/1.1" 403 121 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "GET /api/admin/analytics HTTP/1.1" 401 100 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "GET /api/admin/analytics?startDate=2025-11-20T06:13:04.787Z&endDate=2025-12-20T06:13:04.787Z HTTP/1.1" 401 100 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:04 +0000] "GET /api/admin/users HTTP/1.1" 401 100 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "GET /api/admin/users HTTP/1.1" 403 121 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "GET /api/admin/users?role=CUSTOMER HTTP/1.1" 401 100 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "GET /api/admin/users?page=1&limit=2 HTTP/1.1" 401 100 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "POST /api/auth/signup HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "PATCH /api/admin/users/fake-id/role HTTP/1.1" 403 121 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:05 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:06 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:06 +0000] "PATCH /api/admin/users/fake-id/role HTTP/1.1" 401 100 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:06 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:06 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:06 +0000] "GET /api/admin/reports?type=bookings HTTP/1.1" 401 100 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:06 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:06 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:06 +0000] "GET /api/admin/reports?type=revenue HTTP/1.1" 401 100 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:06 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:06 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:06 +0000] "GET /api/admin/reports HTTP/1.1" 403 121 "-" "-"
+  console.log
+    ✅ Test cleanup complete
+
+      at Object.log (tests/setup.js:111:11)
+
+  console.log
+    ✅ Stripe initialized
+
+      at log (src/config/stripe.js:16:13)
+
+  console.log
+    📁 Test MongoDB connected
+
+      at Object.log (tests/setup.js:83:11)
+
+  console.log
+    🔄 Test Redis connected
+
+      at Object.log (tests/setup.js:94:13)
+
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:06 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:06 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:06 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:07 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:08 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:09 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+  console.log
+    ✅ Test cleanup complete
+
+      at Object.log (tests/setup.js:111:11)
+
+  console.log
+    ✅ Stripe initialized
+
+      at log (src/config/stripe.js:16:13)
+
+  console.log
+    📁 Test MongoDB connected
+
+      at Object.log (tests/setup.js:83:11)
+
+  console.log
+    🔄 Test Redis connected
+
+      at Object.log (tests/setup.js:94:13)
+
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:10 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:11 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:12 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+  console.log
+    ✅ Test cleanup complete
+
+      at Object.log (tests/setup.js:111:11)
+
+  console.log
+    ✅ Stripe initialized
+
+      at log (src/config/stripe.js:16:13)
+
+  console.log
+    📁 Test MongoDB connected
+
+      at Object.log (tests/setup.js:83:11)
+
+  console.log
+    🔄 Test Redis connected
+
+      at Object.log (tests/setup.js:94:13)
+
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:13 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:14 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:15 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:16 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/signup HTTP/1.1" 201 574 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/providers HTTP/1.1" 400 157 "-" "-"
+  console.log
+    ✅ Test cleanup complete
+
+      at Object.log (tests/setup.js:111:11)
+
+  console.log
+    ✅ Stripe initialized
+
+      at log (src/config/stripe.js:16:13)
+
+  console.log
+    📁 Test MongoDB connected
+
+      at Object.log (tests/setup.js:83:11)
+
+  console.log
+    🔄 Test Redis connected
+
+      at Object.log (tests/setup.js:94:13)
+
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/signup HTTP/1.1" 201 560 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/signup HTTP/1.1" 201 564 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/signup HTTP/1.1" 201 558 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/signup HTTP/1.1" 400 110 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/signup HTTP/1.1" 400 171 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/signup HTTP/1.1" 400 191 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/signup HTTP/1.1" 400 205 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/signup HTTP/1.1" 400 227 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/signup HTTP/1.1" 201 563 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/login HTTP/1.1" 200 590 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/signup HTTP/1.1" 201 563 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/login HTTP/1.1" 401 111 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/signup HTTP/1.1" 201 563 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:17 +0000] "POST /api/auth/login HTTP/1.1" 401 111 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/signup HTTP/1.1" 201 563 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/login HTTP/1.1" 400 158 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/signup HTTP/1.1" 201 563 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/login HTTP/1.1" 400 161 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/signup HTTP/1.1" 201 568 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "GET /api/auth/me HTTP/1.1" 200 356 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/signup HTTP/1.1" 201 568 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "GET /api/auth/me HTTP/1.1" 401 103 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/signup HTTP/1.1" 201 568 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "GET /api/auth/me HTTP/1.1" 401 99 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/signup HTTP/1.1" 201 568 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "GET /api/auth/me HTTP/1.1" 401 103 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/signup HTTP/1.1" 201 568 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "GET /api/auth/me HTTP/1.1" 401 99 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/signup HTTP/1.1" 201 558 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "PUT /api/auth/profile HTTP/1.1" 404 123 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/signup HTTP/1.1" 201 558 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "PUT /api/auth/profile HTTP/1.1" 404 123 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/signup HTTP/1.1" 201 558 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/signup HTTP/1.1" 201 554 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "PUT /api/auth/profile HTTP/1.1" 404 123 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/signup HTTP/1.1" 201 560 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/change-password HTTP/1.1" 404 132 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/signup HTTP/1.1" 201 560 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/change-password HTTP/1.1" 404 132 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/signup HTTP/1.1" 201 560 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:18 +0000] "POST /api/auth/change-password HTTP/1.1" 404 132 "-" "-"
+  console.log
+    ✅ Test cleanup complete
+
+      at Object.log (tests/setup.js:111:11)
+
+  console.log
+    ✅ Stripe initialized
+
+      at log (src/config/stripe.js:16:13)
+
+  console.log
+    📁 Test MongoDB connected
+
+      at Object.log (tests/setup.js:83:11)
+
+  console.log
+    🔄 Test Redis connected
+
+      at Object.log (tests/setup.js:94:13)
+
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:19 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:20 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/auth/signup HTTP/1.1" 400 220 "-" "-"
+  console.log
+    ✅ Test cleanup complete
+
+      at Object.log (tests/setup.js:111:11)
+
+  console.log
+    ✅ Stripe initialized
+
+      at log (src/config/stripe.js:16:13)
+
+  console.log
+    📁 Test MongoDB connected
+
+      at Object.log (tests/setup.js:83:11)
+
+  console.log
+    🔄 Test Redis connected
+
+      at Object.log (tests/setup.js:94:13)
+
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:21 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:22 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:23 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:24 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/auth/signup HTTP/1.1" 201 578 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:25 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:26 +0000] "POST /api/auth/signup HTTP/1.1" 201 572 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:26 +0000] "POST /api/providers HTTP/1.1" 201 444 "-" "-"
+::ffff:127.0.0.1 - - [20/Dec/2025:06:13:26 +0000] "POST /api/appointment-types HTTP/1.1" 400 261 "-" "-"
+  console.log
+    ✅ Test cleanup complete
+
+      at Object.log (tests/setup.js:111:11)
+

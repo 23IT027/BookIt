@@ -1,0 +1,62 @@
+{
+  "name": "appointment-booking-backend",
+  "version": "1.0.0",
+  "description": "Real-time appointment booking system with Stripe payments",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "dev:clean": "lsof -ti:3001 | xargs kill -9 2>/dev/null; nodemon src/server.js",
+    "kill-port": "lsof -ti:3001 | xargs kill -9 2>/dev/null && echo '✅ Port 3001 freed' || echo '✅ Port already free'",
+    "test": "jest --runInBand --detectOpenHandles --forceExit",
+    "test:watch": "jest --watch --runInBand",
+    "test:coverage": "jest --coverage --runInBand --detectOpenHandles --forceExit",
+    "test:auth": "jest tests/auth.test.js --runInBand",
+    "test:rbac": "jest tests/rbac-extended.test.js --runInBand",
+    "test:provider": "jest tests/provider.test.js --runInBand",
+    "test:appointment": "jest tests/appointmentType.test.js --runInBand",
+    "test:availability": "jest tests/availability-slots.test.js --runInBand",
+    "test:concurrency": "jest tests/concurrency.test.js --runInBand --testTimeout=60000",
+    "test:booking": "jest tests/booking-payment.test.js --runInBand",
+    "test:websocket": "jest tests/websocket-admin.test.js --runInBand --testTimeout=30000",
+    "test:quick": "jest --testPathIgnorePatterns=concurrency --runInBand",
+    "seed": "node src/scripts/seed.js"
+  },
+  "keywords": [
+    "appointment",
+    "booking",
+    "stripe",
+    "redis",
+    "websocket"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cloudinary": "^1.41.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "ics": "^3.8.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.3",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^7.0.13",
+    "redis": "^4.6.11",
+    "socket.io": "^4.6.1",
+    "stripe": "^14.10.0",
+    "uuid": "^13.0.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "mongodb-memory-server": "^9.5.0",
+    "nodemon": "^3.0.2",
+    "socket.io-client": "^4.8.1",
+    "supertest": "^6.3.3"
+  }
+}
