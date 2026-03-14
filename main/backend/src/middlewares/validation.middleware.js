@@ -34,7 +34,7 @@ const schemas = {
       name: z.string().min(1, 'Name is required').max(100),
       email: z.string().email('Invalid email address'),
       password: z.string().min(6, 'Password must be at least 6 characters'),
-      role: z.enum(['CUSTOMER', 'ORGANISER']).optional(),
+      role: z.enum(['CUSTOMER', 'PROVIDER']).optional(),
       phone: z.string().optional()
     })
   }),
@@ -113,6 +113,7 @@ const schemas = {
       providerId: z.string().min(1, 'Provider ID is required'),
       category: z.string().optional(),
       tags: z.array(z.string()).optional(),
+      pricingMode: z.enum(['PER_HOUR', 'PER_SLOT', 'FLAT']).optional(),
       useCustomAvailability: z.boolean().optional(),
       availability: z.array(z.object({
         dayOfWeek: z.number().min(0).max(6),
