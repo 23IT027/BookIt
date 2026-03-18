@@ -100,7 +100,7 @@ const getProviderById = async (req, res) => {
 
 // Get provider by user ID
 const getProviderByUserId = async (req, res) => {
-  const userId = req.params.userId || req.user._id;
+  const userId = (req.params.userId && req.params.userId !== 'me') ? req.params.userId : req.user._id;
 
   const provider = await Provider.findOne({ userId })
     .populate('userId', 'name email phone');

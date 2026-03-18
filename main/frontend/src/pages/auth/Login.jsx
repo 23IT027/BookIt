@@ -48,6 +48,8 @@ export function LoginPage() {
           navigate('/admin');
         } else if (userRole === 'ORGANISER') {
           navigate('/organiser');
+        } else if (userRole === 'PROVIDER') {
+          navigate('/provider');
         } else {
           navigate('/providers');
         }

@@ -11,8 +11,8 @@ router.get('/:id', optionalAuth, providerController.getProviderById);
 
 // Protected routes - Provider only (and admin)
 router.post('/', authenticate, isProvider, validate(schemas.createProvider), providerController.createProvider);
-router.get('/user/:userId', authenticate, providerController.getProviderByUserId);
 router.get('/user/me/provider', authenticate, isProvider, providerController.getProviderByUserId);
+router.get('/user/:userId', authenticate, providerController.getProviderByUserId);
 
 // Provider stats (must come before /:id routes)
 router.get('/:id/stats', authenticate, providerController.getProviderStats);

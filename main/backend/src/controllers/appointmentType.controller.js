@@ -304,8 +304,8 @@ const getAllAppointmentTypes = async (req, res) => {
     if (maxPrice) query.price.$lte = parseFloat(maxPrice);
   }
 
-  // Organiser can see only their types (unless admin)
-  if (req.user && req.user.role === 'ORGANISER') {
+  // Organiser and Provider see only their types (unless admin)
+  if (req.user && (req.user.role === 'ORGANISER' || req.user.role === 'PROVIDER')) {
     query.organiserId = req.user._id;
   }
 

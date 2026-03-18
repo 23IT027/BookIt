@@ -21,6 +21,7 @@ export function VerifyOTPPage() {
   const [countdown, setCountdown] = useState(30);
   const [canResend, setCanResend] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
+  const hasSentOTP = useRef(false);
   
   const inputRefs = useRef([]);
 
@@ -34,12 +35,13 @@ export function VerifyOTPPage() {
     }
   }, [countdown, canResend]);
 
-  // Send OTP on mount if coming from signup
+  // Send OTP on mount if coming from signup (useRef prevents StrictMode double-fire)
   useEffect(() => {
-    if (fromSignup && email) {
+    if (fromSignup && email && !hasSentOTP.current) {
+      hasSentOTP.current = true;
       handleSendOTP();
     }
-  }, []);
+  }, [fromSignup, email]);
 
   const handleSendOTP = async () => {
     if (!email) {
