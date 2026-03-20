@@ -371,14 +371,14 @@ class SlotService {
         results.push({
           date: dateString,
           hasAvailability: slots.length > 0,
-          availableSlots: slots.length
+          availableSlots: slots
         });
       } catch (error) {
         // If there's an error, mark as no availability
         results.push({
           date: dateString,
           hasAvailability: false,
-          availableSlots: 0
+          availableSlots: []
         });
       }
 

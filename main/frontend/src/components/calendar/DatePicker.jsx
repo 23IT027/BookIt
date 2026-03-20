@@ -104,7 +104,9 @@ export function DatePicker({
           const isCurrentDay = isToday(date);
           const dateAvailability = getDateAvailability(date);
           const hasAvailability = dateAvailability?.hasAvailability;
-          const slotCount = dateAvailability?.availableSlots || 0;
+          const slotCount = Array.isArray(dateAvailability?.availableSlots) 
+            ? dateAvailability.availableSlots.length 
+            : (dateAvailability?.availableSlots || 0);
           const isLoaded = dateAvailability !== undefined;
 
           return (
