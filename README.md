@@ -1,4 +1,4 @@
-# 📅 BookEase - Appointment Booking System
+# 📅 BookIt - Appointment Booking System
 
 ## Video Link : https://drive.google.com/file/d/17L9MiVmqzUkyc0_oYX5d5KwI_zNBc41t/view?usp=sharing
 <div align="center">
