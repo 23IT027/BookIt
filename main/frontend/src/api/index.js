@@ -128,6 +128,7 @@ export const bookingAPI = {
 // Payment API
 export const paymentAPI = {
   createCheckout: (bookingId) => api.post('/payment/create-checkout', { bookingId }),
+  createMultiCheckout: (bookingIds) => api.post('/payment/create-multi-checkout', { bookingIds }),
   createGuestCheckout: (bookingId, email) => api.post('/payment/guest-checkout', { bookingId, email }),
   getByBooking: (bookingId) => api.get(`/payment/booking/${bookingId}`),
   getCustomerPayments: () => api.get('/payment/customer'),

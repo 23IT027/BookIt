@@ -16,6 +16,7 @@ router.get('/verify/:sessionId', paymentController.verifyPayment);
 router.use(authenticate);
 
 router.post('/create-checkout', paymentController.createCheckoutSession);
+router.post('/create-multi-checkout', paymentController.createMultiCheckoutSession);
 router.get('/booking/:bookingId', paymentController.getPaymentByBookingId);
 router.get('/customer', paymentController.getCustomerPayments);
 router.post('/:paymentId/refund', paymentController.requestRefund);

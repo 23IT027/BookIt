@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Calendar, Clock, CreditCard, Check, Loader2, AlertCircle, FileText, Layers } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar, Clock, CreditCard, Check, Loader2, AlertCircle, FileText, Layers, X } from 'lucide-react';
 import { DatePicker } from '../calendar/DatePicker';
 import { SlotGrid } from './SlotGrid';
 import { Button } from '../ui/Button';
@@ -30,7 +30,7 @@ export function BookingFlow({ provider, appointmentType, onComplete, onCancel })
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedSlot, setSelectedSlot] = useState(null);
+  const [selectedSlots, setSelectedSlots] = useState([]);
   const [selectedResource, setSelectedResource] = useState(null);
   const [slots, setSlots] = useState([]);
   const [isLoadingSlots, setIsLoadingSlots] = useState(false);
@@ -56,6 +56,10 @@ export function BookingFlow({ provider, appointmentType, onComplete, onCancel })
     return result;
   }, [hasQuestions, hasResources]);
   const [error, setError] = useState(null);
+
+  // Computed values
+  const unitPrice = appointmentType?.price || 0;
+  const totalPrice = unitPrice * selectedSlots.length;
 
   // Fetch availability for a date range
   const fetchAvailabilityForRange = useCallback(async (startDateObj, endDateObj) => {
@@ -123,13 +127,16 @@ export function BookingFlow({ provider, appointmentType, onComplete, onCancel })
       return slot;
     }));
 
-    // If the selected slot was taken, clear selection
-    if (selectedSlot?.startTime === data.slot?.startTime) {
-      setSelectedSlot(null);
-      setError('This slot was just booked by someone else. Please select another time.');
-      toast.error('Slot taken! Please choose another time.');
-    }
-  }, [selectedSlot]);
+    // If any selected slot was taken, remove it from selection
+    setSelectedSlots(prev => {
+      const filtered = prev.filter(s => s.startTime !== data.slot?.startTime);
+      if (filtered.length < prev.length) {
+        setError('One of your selected slots was just booked by someone else.');
+        toast.error('A slot was taken! Please review your selection.');
+      }
+      return filtered;
+    });
+  }, []);
 
   const handleBookingCancelled = useCallback((data) => {
     setSlots(prev => prev.map(slot => {
@@ -150,7 +157,7 @@ export function BookingFlow({ provider, appointmentType, onComplete, onCancel })
     const fetchSlots = async () => {
       setIsLoadingSlots(true);
       setError(null);
-      setSelectedSlot(null);
+      setSelectedSlots([]);
 
       try {
         // Use local date components to avoid timezone issues
@@ -175,10 +182,17 @@ export function BookingFlow({ provider, appointmentType, onComplete, onCancel })
     setCurrentStep(1);
   };
 
+  // Multi-select: toggle slot in/out of selectedSlots array
   const handleSlotSelect = (slot) => {
-    setSelectedSlot(slot);
-    setSelectedResource(null); // Reset resource when slot changes
     setError(null);
+    setSelectedSlots(prev => {
+      const exists = prev.find(s => s.startTime === slot.startTime);
+      if (exists) {
+        return prev.filter(s => s.startTime !== slot.startTime);
+      }
+      return [...prev, slot];
+    });
+    setSelectedResource(null);
   };
 
   const handleResourceSelect = (resource) => {
@@ -187,7 +201,7 @@ export function BookingFlow({ provider, appointmentType, onComplete, onCancel })
   };
 
   const handleConfirmSlot = () => {
-    if (selectedSlot) {
+    if (selectedSlots.length > 0) {
       // Go to next step (resources if has resources, questions if has questions, otherwise confirm)
       setCurrentStep(2);
     }
@@ -231,8 +245,13 @@ export function BookingFlow({ provider, appointmentType, onComplete, onCancel })
     }
   };
 
+  // Remove a single slot from the confirm page
+  const handleRemoveSlot = (slot) => {
+    setSelectedSlots(prev => prev.filter(s => s.startTime !== slot.startTime));
+  };
+
   const handleBookAndPay = async () => {
-    if (!selectedSlot || !selectedDate) return;
+    if (selectedSlots.length === 0 || !selectedDate) return;
 
     // Validate resource selection if service has resources
     if (hasResources && !selectedResource) {
@@ -247,12 +266,6 @@ export function BookingFlow({ provider, appointmentType, onComplete, onCancel })
     setError(null);
 
     try {
-      // Step 1: Create the booking
-      // selectedSlot.startTime is already an ISO date string from the API
-      const startTime = typeof selectedSlot.startTime === 'string' && selectedSlot.startTime.includes('T')
-        ? selectedSlot.startTime  // Already an ISO string
-        : new Date(`${formatLocalDate(selectedDate)}T${selectedSlot.startTime}`).toISOString();
-      
       // Format answers as array of { question, answer } objects
       const formattedAnswers = hasQuestions
         ? appointmentType.questions.map(q => ({
@@ -261,38 +274,56 @@ export function BookingFlow({ provider, appointmentType, onComplete, onCancel })
           })).filter(a => a.answer) // Only include non-empty answers
         : [];
 
-      const bookingPayload = {
-        appointmentTypeId: appointmentType._id,
-        providerId: provider._id,
-        startTime,
-        answers: formattedAnswers,
-      };
+      // Create a booking for each selected slot
+      const bookingPromises = selectedSlots.map(async (slot) => {
+        const startTime = typeof slot.startTime === 'string' && slot.startTime.includes('T')
+          ? slot.startTime
+          : new Date(`${formatLocalDate(selectedDate)}T${slot.startTime}`).toISOString();
 
-      // Add resourceId if service has resources
-      if (hasResources && selectedResource) {
-        bookingPayload.resourceId = selectedResource.resourceId || selectedResource._id;
-      }
+        const bookingPayload = {
+          appointmentTypeId: appointmentType._id,
+          providerId: provider._id,
+          startTime,
+          answers: formattedAnswers,
+        };
 
-      const bookingResponse = await bookingAPI.create(bookingPayload);
-      const booking = bookingResponse.data.data?.booking || bookingResponse.data.booking || bookingResponse.data;
+        if (hasResources && selectedResource) {
+          bookingPayload.resourceId = selectedResource.resourceId || selectedResource._id;
+        }
 
-      // Step 2: Check if payment is required
-      if (appointmentType.price > 0) {
-        // Create Stripe checkout session
-        const paymentResponse = await paymentAPI.createCheckout(booking._id);
-        const checkoutUrl = paymentResponse.data.data?.sessionUrl || paymentResponse.data.sessionUrl || 
-                           paymentResponse.data.data?.url || paymentResponse.data.url;
+        const bookingResponse = await bookingAPI.create(bookingPayload);
+        return bookingResponse.data.data?.booking || bookingResponse.data.booking || bookingResponse.data;
+      });
 
-        if (checkoutUrl) {
-          // Redirect to Stripe checkout
-          window.location.href = checkoutUrl;
-          return;
+      const bookings = await Promise.all(bookingPromises);
+
+      // Check if payment is required
+      if (unitPrice > 0) {
+        if (bookings.length === 1) {
+          // Single booking — use existing single-checkout flow
+          const paymentResponse = await paymentAPI.createCheckout(bookings[0]._id);
+          const checkoutUrl = paymentResponse.data.data?.sessionUrl || paymentResponse.data.sessionUrl ||
+                             paymentResponse.data.data?.url || paymentResponse.data.url;
+          if (checkoutUrl) {
+            window.location.href = checkoutUrl;
+            return;
+          }
+        } else {
+          // Multiple bookings — use multi-checkout
+          const bookingIds = bookings.map(b => b._id);
+          const paymentResponse = await paymentAPI.createMultiCheckout(bookingIds);
+          const checkoutUrl = paymentResponse.data.data?.sessionUrl || paymentResponse.data.sessionUrl ||
+                             paymentResponse.data.data?.url || paymentResponse.data.url;
+          if (checkoutUrl) {
+            window.location.href = checkoutUrl;
+            return;
+          }
         }
       }
 
       // If free appointment or payment not required
-      toast.success('Booking confirmed!');
-      onComplete?.(booking);
+      toast.success(bookings.length > 1 ? `${bookings.length} bookings confirmed!` : 'Booking confirmed!');
+      onComplete?.(bookings.length === 1 ? bookings[0] : bookings);
       navigate('/my-bookings');
 
     } catch (err) {
@@ -300,10 +331,10 @@ export function BookingFlow({ provider, appointmentType, onComplete, onCancel })
       
       // Handle 409 Conflict - slot already taken
       if (err.response?.status === 409) {
-        setError('This slot was just booked by someone else. Please select a different time.');
+        setError('One or more slots were just booked by someone else. Please select different times.');
         toast.error('Slot already booked! Please choose another time.');
         setCurrentStep(1); // Go back to time selection
-        setSelectedSlot(null);
+        setSelectedSlots([]);
         // Refresh slots
         const formattedDate = formatLocalDate(selectedDate);
         const response = await slotAPI.getAvailable(provider._id, formattedDate, appointmentType?._id);
@@ -424,198 +455,235 @@ export function BookingFlow({ provider, appointmentType, onComplete, onCancel })
 
                 <SlotGrid
                   slots={slots}
-                  selectedSlot={selectedSlot}
+                  selectedSlots={selectedSlots}
                   onSlotSelect={handleSlotSelect}
+                  multiSelect={true}
                   isLoading={isLoadingSlots}
                   isConnected={isConnected}
                 />
 
-                {selectedSlot && (
+                {/* Selected slots summary pill */}
+                {selectedSlots.length > 0 && (
                   <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="mt-4 pt-4 border-t border-white/5"
-                >
-                  <Button onClick={handleConfirmSlot} className="w-full">
-                    Continue with {formatTime(selectedSlot.startTime)}
-                  </Button>
-                </motion.div>
-              )}
-            </Card>
-          )}
+                  >
+                    <div className="flex flex-wrap gap-2 mb-3">
+                      {selectedSlots.map((s, i) => (
+                        <span key={i} className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium bg-cyan-500/15 text-cyan-400 border border-cyan-500/30">
+                          {formatTime(s.startTime)}
+                          <button onClick={(e) => { e.stopPropagation(); handleRemoveSlot(s); }} className="hover:text-white">
+                            <X className="w-3 h-3" />
+                          </button>
+                        </span>
+                      ))}
+                    </div>
+                    <Button onClick={handleConfirmSlot} className="w-full">
+                      Continue with {selectedSlots.length} slot{selectedSlots.length > 1 ? 's' : ''}
+                      {unitPrice > 0 && ` — ${formatCurrency(totalPrice)}`}
+                    </Button>
+                  </motion.div>
+                )}
+              </Card>
+            )}
 
-          {steps[currentStep]?.id === 'resources' && (
-            <Card className="p-6">
-              <h3 className="text-lg font-semibold text-white mb-2">Select a Resource</h3>
-              <p className="text-sm text-gray-400 mb-6">
-                Choose which {appointmentType?.title?.toLowerCase() || 'resource'} you want to book
-              </p>
+            {steps[currentStep]?.id === 'resources' && (
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold text-white mb-2">Select a Resource</h3>
+                <p className="text-sm text-gray-400 mb-6">
+                  Choose which {appointmentType?.title?.toLowerCase() || 'resource'} you want to book
+                </p>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {(selectedSlot?.availableResources || appointmentType?.resources?.filter(r => r.isActive !== false))?.map((resource, index) => {
-                  const resourceId = resource.resourceId || resource._id;
-                  const isSelected = selectedResource?.resourceId === resourceId || selectedResource?._id === resourceId;
-                  return (
-                    <motion.button
-                      key={resourceId || index}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: index * 0.05 }}
-                      type="button"
-                      onClick={() => handleResourceSelect({ resourceId: resourceId, name: resource.name })}
-                      className={classNames(
-                        'p-4 rounded-xl text-center transition-all border-2 font-medium',
-                        isSelected 
-                          ? 'bg-gradient-to-br from-cyan-500 to-blue-600 border-transparent text-white shadow-lg shadow-cyan-500/25' 
-                          : 'bg-dark-700/50 border-white/5 hover:border-cyan-500/30 text-gray-300 hover:bg-dark-700'
-                      )}
-                    >
-                      <span className="block text-lg">{resource.name}</span>
-                    </motion.button>
-                  );
-                })}
-              </div>
-
-              {selectedResource && (
-                <div className="mt-6 pt-6 border-t border-white/5">
-                  <Button onClick={handleResourceConfirm} className="w-full">
-                    Continue with {selectedResource.name}
-                  </Button>
-                </div>
-              )}
-            </Card>
-          )}
-
-          {steps[currentStep]?.id === 'questions' && (
-            <Card className="p-6">
-              <h3 className="text-lg font-semibold text-white mb-2">Additional Details</h3>
-              <p className="text-sm text-gray-400 mb-6">Please answer the following questions</p>
-
-              <div className="space-y-4">
-                {appointmentType?.questions?.map((q, index) => (
-                  <div key={q._id || index} className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-300">
-                      {q.question}
-                      {q.required && <span className="text-red-400 ml-1">*</span>}
-                    </label>
-                    {q.type === 'TEXTAREA' ? (
-                      <textarea
-                        value={answers[q._id || q.question] || ''}
-                        onChange={(e) => handleAnswerChange(q._id || q.question, e.target.value)}
-                        rows={3}
-                        className="w-full px-4 py-3 bg-dark-700 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 focus:outline-none"
-                        placeholder="Type your answer..."
-                      />
-                    ) : q.type === 'SELECT' && q.options?.length > 0 ? (
-                      <select
-                        value={answers[q._id || q.question] || ''}
-                        onChange={(e) => handleAnswerChange(q._id || q.question, e.target.value)}
-                        className="w-full px-4 py-3 bg-dark-700 border border-white/10 rounded-xl text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 focus:outline-none"
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {(selectedSlots[0]?.availableResources || appointmentType?.resources?.filter(r => r.isActive !== false))?.map((resource, index) => {
+                    const resourceId = resource.resourceId || resource._id;
+                    const isSelected = selectedResource?.resourceId === resourceId || selectedResource?._id === resourceId;
+                    return (
+                      <motion.button
+                        key={resourceId || index}
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: index * 0.05 }}
+                        type="button"
+                        onClick={() => handleResourceSelect({ resourceId: resourceId, name: resource.name })}
+                        className={classNames(
+                          'p-4 rounded-xl text-center transition-all border-2 font-medium',
+                          isSelected 
+                            ? 'bg-gradient-to-br from-cyan-500 to-blue-600 border-transparent text-white shadow-lg shadow-cyan-500/25' 
+                            : 'bg-dark-700/50 border-white/5 hover:border-cyan-500/30 text-gray-300 hover:bg-dark-700'
+                        )}
                       >
-                        <option value="">Select an option</option>
-                        {q.options.map((opt, i) => (
-                          <option key={i} value={opt}>{opt}</option>
-                        ))}
-                      </select>
-                    ) : (
-                      <input
-                        type="text"
-                        value={answers[q._id || q.question] || ''}
-                        onChange={(e) => handleAnswerChange(q._id || q.question, e.target.value)}
-                        className="w-full px-4 py-3 bg-dark-700 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 focus:outline-none"
-                        placeholder="Type your answer..."
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-6 pt-6 border-t border-white/5">
-                <Button onClick={handleQuestionsSubmit} className="w-full">
-                  Continue to Confirmation
-                </Button>
-              </div>
-            </Card>
-          )}
-
-          {steps[currentStep]?.id === 'confirm' && (
-            <Card className="p-4">
-              <h3 className="text-lg font-semibold text-white mb-4">Confirm Your Booking</h3>
-
-              {/* Booking summary - More compact grid layout */}
-              <div className="space-y-3 mb-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="p-3 rounded-lg bg-dark-700/50">
-                    <p className="text-xs text-gray-400 mb-1">Service</p>
-                    <p className="font-medium text-white text-sm">{appointmentType?.title || appointmentType?.name}</p>
-                  </div>
-
-                  <div className="p-3 rounded-lg bg-dark-700/50">
-                    <p className="text-xs text-gray-400 mb-1">Provider</p>
-                    <p className="font-medium text-white text-sm">{provider?.name || provider?.businessName}</p>
-                  </div>
+                        <span className="block text-lg">{resource.name}</span>
+                      </motion.button>
+                    );
+                  })}
                 </div>
 
-                <div className="grid grid-cols-2 gap-3">
+                {selectedResource && (
+                  <div className="mt-6 pt-6 border-t border-white/5">
+                    <Button onClick={handleResourceConfirm} className="w-full">
+                      Continue with {selectedResource.name}
+                    </Button>
+                  </div>
+                )}
+              </Card>
+            )}
+
+            {steps[currentStep]?.id === 'questions' && (
+              <Card className="p-6">
+                <h3 className="text-lg font-semibold text-white mb-2">Additional Details</h3>
+                <p className="text-sm text-gray-400 mb-6">Please answer the following questions</p>
+
+                <div className="space-y-4">
+                  {appointmentType?.questions?.map((q, index) => (
+                    <div key={q._id || index} className="space-y-2">
+                      <label className="block text-sm font-medium text-gray-300">
+                        {q.question}
+                        {q.required && <span className="text-red-400 ml-1">*</span>}
+                      </label>
+                      {q.type === 'TEXTAREA' ? (
+                        <textarea
+                          value={answers[q._id || q.question] || ''}
+                          onChange={(e) => handleAnswerChange(q._id || q.question, e.target.value)}
+                          rows={3}
+                          className="w-full px-4 py-3 bg-dark-700 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 focus:outline-none"
+                          placeholder="Type your answer..."
+                        />
+                      ) : q.type === 'SELECT' && q.options?.length > 0 ? (
+                        <select
+                          value={answers[q._id || q.question] || ''}
+                          onChange={(e) => handleAnswerChange(q._id || q.question, e.target.value)}
+                          className="w-full px-4 py-3 bg-dark-700 border border-white/10 rounded-xl text-white focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 focus:outline-none"
+                        >
+                          <option value="">Select an option</option>
+                          {q.options.map((opt, i) => (
+                            <option key={i} value={opt}>{opt}</option>
+                          ))}
+                        </select>
+                      ) : (
+                        <input
+                          type="text"
+                          value={answers[q._id || q.question] || ''}
+                          onChange={(e) => handleAnswerChange(q._id || q.question, e.target.value)}
+                          className="w-full px-4 py-3 bg-dark-700 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 focus:outline-none"
+                          placeholder="Type your answer..."
+                        />
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 pt-6 border-t border-white/5">
+                  <Button onClick={handleQuestionsSubmit} className="w-full">
+                    Continue to Confirmation
+                  </Button>
+                </div>
+              </Card>
+            )}
+
+            {steps[currentStep]?.id === 'confirm' && (
+              <Card className="p-4">
+                <h3 className="text-lg font-semibold text-white mb-4">Confirm Your Booking</h3>
+
+                {/* Booking summary */}
+                <div className="space-y-3 mb-4">
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="p-3 rounded-lg bg-dark-700/50">
+                      <p className="text-xs text-gray-400 mb-1">Service</p>
+                      <p className="font-medium text-white text-sm">{appointmentType?.title || appointmentType?.name}</p>
+                    </div>
+
+                    <div className="p-3 rounded-lg bg-dark-700/50">
+                      <p className="text-xs text-gray-400 mb-1">Provider</p>
+                      <p className="font-medium text-white text-sm">{provider?.name || provider?.businessName}</p>
+                    </div>
+                  </div>
+
                   <div className="p-3 rounded-lg bg-dark-700/50">
                     <p className="text-xs text-gray-400 mb-1">Date</p>
                     <p className="font-medium text-white text-sm">{formatDate(selectedDate)}</p>
                   </div>
 
+                  {/* Selected slots list */}
                   <div className="p-3 rounded-lg bg-dark-700/50">
-                    <p className="text-xs text-gray-400 mb-1">Time</p>
-                    <p className="font-medium text-white text-sm">{formatTime(selectedSlot?.startTime)}</p>
-                  </div>
-                </div>
-
-                {/* Resource - only show if service has resources */}
-                {hasResources && selectedResource && (
-                  <div className="p-3 rounded-lg bg-dark-700/50">
-                    <p className="text-xs text-gray-400 mb-1">Resource</p>
-                    <p className="font-medium text-white text-sm">{selectedResource.name}</p>
-                  </div>
-                )}
-
-                <div className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/30">
-                  <div className="flex items-center justify-between">
-                    <p className="text-gray-300 text-sm">Total Amount</p>
-                    <p className="text-xl font-bold text-cyan-400">
-                      {formatCurrency(appointmentType?.price)}
+                    <p className="text-xs text-gray-400 mb-2">
+                      Selected Slots ({selectedSlots.length})
                     </p>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedSlots.map((slot, i) => (
+                        <div key={i} className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                          <Clock className="w-3.5 h-3.5" />
+                          {formatTime(slot.startTime)}
+                          {selectedSlots.length > 1 && (
+                            <button
+                              onClick={() => handleRemoveSlot(slot)}
+                              className="ml-1 hover:text-red-400 transition-colors"
+                            >
+                              <X className="w-3 h-3" />
+                            </button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Resource - only show if service has resources */}
+                  {hasResources && selectedResource && (
+                    <div className="p-3 rounded-lg bg-dark-700/50">
+                      <p className="text-xs text-gray-400 mb-1">Resource</p>
+                      <p className="font-medium text-white text-sm">{selectedResource.name}</p>
+                    </div>
+                  )}
+
+                  {/* Price breakdown */}
+                  <div className="p-3 rounded-lg bg-cyan-500/10 border border-cyan-500/30">
+                    {selectedSlots.length > 1 && (
+                      <div className="flex items-center justify-between mb-1">
+                        <p className="text-gray-400 text-xs">
+                          {formatCurrency(unitPrice)} × {selectedSlots.length} slots
+                        </p>
+                      </div>
+                    )}
+                    <div className="flex items-center justify-between">
+                      <p className="text-gray-300 text-sm">Total Amount</p>
+                      <p className="text-xl font-bold text-cyan-400">
+                        {formatCurrency(totalPrice)}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <Button 
-                onClick={handleBookAndPay} 
-                disabled={isProcessing}
-                className="w-full"
-              >
-                {isProcessing ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin mr-2" />
-                    Processing...
-                  </>
-                ) : appointmentType?.price > 0 ? (
-                  <>
-                    <CreditCard className="w-4 h-4 mr-2" />
-                    Pay {formatCurrency(appointmentType?.price)}
-                  </>
-                ) : (
-                  <>
-                    <Check className="w-4 h-4 mr-2" />
-                    Confirm Booking
-                  </>
-                )}
-              </Button>
+                <Button 
+                  onClick={handleBookAndPay} 
+                  disabled={isProcessing || selectedSlots.length === 0}
+                  className="w-full"
+                >
+                  {isProcessing ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin mr-2" />
+                      Processing...
+                    </>
+                  ) : totalPrice > 0 ? (
+                    <>
+                      <CreditCard className="w-4 h-4 mr-2" />
+                      Pay {formatCurrency(totalPrice)}
+                    </>
+                  ) : (
+                    <>
+                      <Check className="w-4 h-4 mr-2" />
+                      {selectedSlots.length > 1 ? `Confirm ${selectedSlots.length} Bookings` : 'Confirm Booking'}
+                    </>
+                  )}
+                </Button>
 
-              <p className="text-xs text-gray-500 text-center mt-3">
-                You'll be redirected to Stripe for secure payment
-              </p>
-            </Card>
-          )}
-        </motion.div>
-      </AnimatePresence>
+                <p className="text-xs text-gray-500 text-center mt-3">
+                  {totalPrice > 0 ? "You'll be redirected to Stripe for secure payment" : 'Your bookings will be confirmed instantly'}
+                </p>
+              </Card>
+            )}
+          </motion.div>
+        </AnimatePresence>
       </div>
 
       {/* Navigation - Fixed at bottom */}
@@ -625,7 +693,7 @@ export function BookingFlow({ provider, appointmentType, onComplete, onCancel })
           Back
         </Button>
 
-        {steps[currentStep]?.id === 'time' && selectedSlot && (
+        {steps[currentStep]?.id === 'time' && selectedSlots.length > 0 && (
           <Button onClick={handleConfirmSlot} size="sm">
             Continue
             <ChevronRight className="w-4 h-4 ml-1" />

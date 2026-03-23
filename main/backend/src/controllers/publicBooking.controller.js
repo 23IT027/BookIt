@@ -1,6 +1,7 @@
 const Booking = require('../models/booking.model');
 const AppointmentType = require('../models/appointmentType.model');
 const Provider = require('../models/provider.model');
+const User = require('../models/user.model');
 const slotService = require('../services/slot.service');
 const redisLockService = require('../services/redisLock.service');
 const emailService = require('../services/email.service');
@@ -185,6 +186,12 @@ const createGuestBooking = async (req, res) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(guestEmail)) {
     return badRequest(res, 'Invalid email format');
+  }
+
+  // Check if the guest email belongs to a provider or organiser
+  const existingUser = await User.findOne({ email: guestEmail.toLowerCase() });
+  if (existingUser && (existingUser.role === 'PROVIDER' || existingUser.role === 'ORGANISER')) {
+    return badRequest(res, 'This email belongs to a provider account and cannot be used for customer bookings');
   }
 
   // Find provider by slug
@@ -552,6 +559,12 @@ const createPrivateServiceBooking = async (req, res) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(guestEmail)) {
     return badRequest(res, 'Please provide a valid email address');
+  }
+
+  // Check if the guest email belongs to a provider or organiser
+  const existingUser = await User.findOne({ email: guestEmail.toLowerCase() });
+  if (existingUser && (existingUser.role === 'PROVIDER' || existingUser.role === 'ORGANISER')) {
+    return badRequest(res, 'This email belongs to a provider account and cannot be used for customer bookings');
   }
 
   const appointmentType = await AppointmentType.findOne({

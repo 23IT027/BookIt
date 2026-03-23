@@ -137,15 +137,20 @@ export const useAuthStore = create((set, get) => ({
       localStorage.setItem('user', JSON.stringify(user));
       set({ user, isAuthenticated: true, isLoading: false });
     } catch (error) {
-      // Token is invalid, clear auth state
-      localStorage.removeItem('authToken');
-      localStorage.removeItem('user');
-      set({ 
-        user: null, 
-        token: null, 
-        isAuthenticated: false, 
-        isLoading: false 
-      });
+      // Only clear auth state if token is invalid (401 Unauthorized)
+      if (error.response?.status === 401) {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('user');
+        set({ 
+          user: null, 
+          token: null, 
+          isAuthenticated: false, 
+          isLoading: false 
+        });
+      } else {
+        // Stop loading on network errors without wiping auth
+        set({ isLoading: false });
+      }
     }
   },
 

@@ -80,6 +80,7 @@ const login = async (req, res) => {
 
 // Get current user
 const getCurrentUser = async (req, res) => {
+  res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, private');
   return ok(res, 'User retrieved successfully', {
     user: req.user
   });

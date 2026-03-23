@@ -6,8 +6,10 @@ import { SlotSkeleton } from '../ui/Skeleton';
 
 export function SlotGrid({ 
   slots = [], 
-  selectedSlot, 
+  selectedSlot,       // single select (backward compat)
+  selectedSlots = [], // multi select
   onSlotSelect, 
+  multiSelect = false,
   isLoading = false,
   isConnected = false 
 }) {
@@ -25,6 +27,13 @@ export function SlotGrid({
     );
   }
 
+  const isSelected = (slot) => {
+    if (multiSelect) {
+      return selectedSlots.some(s => s.startTime === slot.startTime);
+    }
+    return selectedSlot?.startTime === slot.startTime;
+  };
+
   return (
     <div className="space-y-4">
       {/* Connection indicator */}
@@ -36,6 +45,11 @@ export function SlotGrid({
         <span className={isConnected ? 'text-emerald-400' : 'text-gray-500'}>
           {isConnected ? 'Live updates enabled' : 'Connecting...'}
         </span>
+        {multiSelect && (
+          <span className="ml-auto text-xs text-gray-500">
+            Tap multiple slots to select them
+          </span>
+        )}
       </div>
 
       {/* Slots grid */}
@@ -48,7 +62,7 @@ export function SlotGrid({
               <SlotButton
                 key={`${slot.startTime}-${slot.endTime}`}
                 slot={slot}
-                isSelected={selectedSlot?.startTime === slot.startTime}
+                isSelected={isSelected(slot)}
                 onSelect={() => isSlotAvailable && onSlotSelect(slot)}
               />
             );

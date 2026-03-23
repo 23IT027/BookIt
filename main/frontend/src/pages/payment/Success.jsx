@@ -9,15 +9,14 @@ import confetti from 'canvas-confetti';
 
 export function PaymentSuccess() {
   const [searchParams] = useSearchParams();
-  const [booking, setBooking] = useState(null);
-  const [payment, setPayment] = useState(null);
+  const [bookings, setBookings] = useState([]);
+  const [payments, setPayments] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const sessionId = searchParams.get('session_id');
 
   useEffect(() => {
-    // Verify payment first
     if (sessionId) {
       verifyPayment();
     } else {
@@ -27,14 +26,13 @@ export function PaymentSuccess() {
 
   const verifyPayment = async () => {
     try {
-      // Call backend to verify payment with Stripe
       const response = await paymentAPI.verifyPayment(sessionId);
       
       if (response.data.data) {
-        setBooking(response.data.data.booking);
-        setPayment(response.data.data.payment);
+        const d = response.data.data;
+        setBookings(d.bookings || (d.booking ? [d.booking] : []));
+        setPayments(d.payments || (d.payment ? [d.payment] : []));
         
-        // Trigger confetti on successful verification
         confetti({
           particleCount: 100,
           spread: 70,
@@ -49,6 +47,9 @@ export function PaymentSuccess() {
       setIsLoading(false);
     }
   };
+
+  const totalPaid = payments.reduce((sum, p) => sum + (p.amount || 0), 0);
+  const booking = bookings[0];
 
   return (
     <div className="min-h-screen bg-dark-900 flex items-center justify-center p-4">
@@ -67,7 +68,6 @@ export function PaymentSuccess() {
             </div>
           ) : error ? (
             <>
-              {/* Error state */}
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -87,7 +87,6 @@ export function PaymentSuccess() {
             </>
           ) : (
             <>
-              {/* Success icon */}
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
@@ -103,7 +102,7 @@ export function PaymentSuccess() {
                 transition={{ delay: 0.3 }}
                 className="text-2xl font-bold text-white mb-2"
               >
-                Booking Confirmed!
+                {bookings.length > 1 ? `${bookings.length} Bookings Confirmed!` : 'Booking Confirmed!'}
               </motion.h1>
 
               <motion.p
@@ -112,7 +111,9 @@ export function PaymentSuccess() {
                 transition={{ delay: 0.4 }}
                 className="text-gray-400 mb-8"
               >
-                Your appointment has been successfully booked. You'll receive a confirmation email shortly.
+                {bookings.length > 1
+                  ? `Your ${bookings.length} appointments have been successfully booked. You'll receive confirmation emails shortly.`
+                  : "Your appointment has been successfully booked. You'll receive a confirmation email shortly."}
               </motion.p>
 
               {booking && (
@@ -123,18 +124,28 @@ export function PaymentSuccess() {
                   className="p-4 rounded-xl bg-dark-700/50 mb-8 text-left space-y-3"
                 >
                   <div>
-                    <p className="text-sm text-gray-400 mb-1">Appointment</p>
+                    <p className="text-sm text-gray-400 mb-1">Service</p>
                     <p className="text-white font-medium">{booking.appointmentTypeId?.title || 'Appointment'}</p>
                   </div>
-                  {payment && (
+                  {bookings.length > 1 && (
                     <div>
-                      <p className="text-sm text-gray-400 mb-1">Amount Paid</p>
-                      <p className="text-emerald-400 font-bold text-lg">₹{payment.amount}</p>
+                      <p className="text-sm text-gray-400 mb-1">Slots Booked</p>
+                      <p className="text-white font-medium">{bookings.length} slots</p>
+                    </div>
+                  )}
+                  {totalPaid > 0 && (
+                    <div>
+                      <p className="text-sm text-gray-400 mb-1">Total Paid</p>
+                      <p className="text-emerald-400 font-bold text-lg">₹{totalPaid}</p>
                     </div>
                   )}
                   <div>
-                    <p className="text-sm text-gray-400 mb-1">Booking Reference</p>
-                    <p className="font-mono text-cyan-400 text-sm">{booking._id}</p>
+                    <p className="text-sm text-gray-400 mb-1">
+                      {bookings.length > 1 ? 'Booking References' : 'Booking Reference'}
+                    </p>
+                    {bookings.map((b, i) => (
+                      <p key={i} className="font-mono text-cyan-400 text-sm">{b._id}</p>
+                    ))}
                   </div>
                 </motion.div>
               )}

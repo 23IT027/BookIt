@@ -77,6 +77,76 @@ class StripeService {
   }
 
   /**
+   * Create a single Stripe Checkout Session for MULTIPLE bookings
+   */
+  async createMultiBookingCheckoutSession(bookings, customer) {
+    if (!this.stripe) {
+      throw new Error('Stripe is not configured');
+    }
+
+    const currency = 'inr';
+    const bookingIds = bookings.map(b => b._id.toString());
+
+    // Build one line-item per booking
+    const line_items = bookings.map(booking => {
+      const apt = booking.appointmentTypeId;
+      const slotTime = new Date(booking.startTime).toLocaleTimeString('en-IN', {
+        hour: '2-digit', minute: '2-digit', hour12: true
+      });
+      return {
+        price_data: {
+          currency,
+          product_data: {
+            name: `${apt.title} — ${slotTime}`,
+            description: apt.description || ''
+          },
+          unit_amount: Math.round(apt.price * 100)
+        },
+        quantity: 1
+      };
+    });
+
+    try {
+      const session = await this.stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items,
+        mode: 'payment',
+        success_url: `${config.stripe.successUrl}?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${config.stripe.cancelUrl}?booking_id=${bookingIds[0]}`,
+        client_reference_id: bookingIds.join(','),
+        customer_email: customer.email,
+        metadata: {
+          bookingIds: bookingIds.join(','),
+          customerId: customer._id.toString(),
+          isMultiBooking: 'true'
+        }
+      });
+
+      // Create a Payment record for each booking
+      const totalAmount = bookings.reduce((sum, b) => sum + b.appointmentTypeId.price, 0);
+      for (const booking of bookings) {
+        await Payment.create({
+          bookingId: booking._id,
+          customerId: customer._id,
+          stripeCheckoutSessionId: session.id,
+          amount: booking.appointmentTypeId.price,
+          currency: 'INR',
+          status: 'PENDING',
+          paymentMethod: 'STRIPE'
+        });
+      }
+
+      return {
+        sessionId: session.id,
+        sessionUrl: session.url
+      };
+    } catch (error) {
+      console.error('Multi-booking Stripe checkout session creation failed:', error);
+      throw new Error(`Payment session creation failed: ${error.message}`);
+    }
+  }
+
+  /**
    * Create a Stripe Checkout Session for guest booking payment
    */
   async createGuestCheckoutSession(booking, appointmentType, guestInfo) {
@@ -150,62 +220,67 @@ class StripeService {
    */
   async handlePaymentSuccess(session) {
     try {
-      const bookingId = session.client_reference_id;
+      const clientRef = session.client_reference_id;
       const paymentIntentId = session.payment_intent;
+      const isMulti = session.metadata?.isMultiBooking === 'true';
+      const bookingIds = clientRef.includes(',') ? clientRef.split(',') : [clientRef];
 
-      // Update payment record
-      const payment = await Payment.findOneAndUpdate(
+      // Update ALL payment records that share this checkout session
+      await Payment.updateMany(
         { stripeCheckoutSessionId: session.id },
         {
           stripePaymentIntentId: paymentIntentId,
           status: 'SUCCEEDED',
           paidAt: new Date()
-        },
-        { new: true }
+        }
       );
 
-      if (!payment) {
-        console.error('Payment record not found for session:', session.id);
-        return;
-      }
+      // Update ALL bookings
+      await Booking.updateMany(
+        { _id: { $in: bookingIds } },
+        { paymentStatus: 'PAID', status: 'CONFIRMED' }
+      );
 
-      // Update booking status
-      const booking = await Booking.findByIdAndUpdate(bookingId, {
-        paymentStatus: 'PAID',
-        status: 'CONFIRMED'
-      }, { new: true })
-        .populate('appointmentTypeId')
-        .populate('providerId')
-        .populate('customerId', 'name email');
-
-      // Get payment intent for receipt URL
+      // Get receipt URL
       if (paymentIntentId) {
-        const paymentIntent = await this.stripe.paymentIntents.retrieve(paymentIntentId);
-        
-        if (paymentIntent.charges.data[0]) {
-          await Payment.findByIdAndUpdate(payment._id, {
-            receiptUrl: paymentIntent.charges.data[0].receipt_url
-          });
+        try {
+          const paymentIntent = await this.stripe.paymentIntents.retrieve(paymentIntentId);
+          const receiptUrl = paymentIntent.charges?.data?.[0]?.receipt_url
+            || paymentIntent.latest_charge?.receipt_url;
+          if (receiptUrl) {
+            await Payment.updateMany(
+              { stripeCheckoutSessionId: session.id },
+              { receiptUrl }
+            );
+          }
+        } catch (e) {
+          console.error('Could not fetch receipt URL:', e.message);
         }
       }
 
-      console.log(`✅ Payment succeeded for booking ${bookingId}`);
+      console.log(`✅ Payment succeeded for booking(s) ${bookingIds.join(', ')}`);
 
-      // 📧 Send confirmation email with calendar invite (async - don't block)
-      if (booking) {
-        (async () => {
+      // 📧 Send confirmation emails for each booking (async)
+      (async () => {
+        for (const bId of bookingIds) {
           try {
-            const calendarContent = await calendarService.generateCalendarInvite(booking);
-            await emailService.sendBookingConfirmationEmail(booking, calendarContent);
-            await emailService.sendProviderBookingNotification(booking);
-            console.log(`📧 Payment confirmation emails sent for booking: ${bookingId}`);
+            const booking = await Booking.findById(bId)
+              .populate('appointmentTypeId')
+              .populate('providerId')
+              .populate('customerId', 'name email');
+            if (booking) {
+              const calendarContent = await calendarService.generateCalendarInvite(booking);
+              await emailService.sendBookingConfirmationEmail(booking, calendarContent);
+              await emailService.sendProviderBookingNotification(booking);
+            }
           } catch (emailError) {
-            console.error(`❌ Failed to send payment confirmation emails:`, emailError);
+            console.error(`❌ Failed to send confirmation email for booking ${bId}:`, emailError);
           }
-        })();
-      }
+        }
+        console.log(`📧 Confirmation emails sent for ${bookingIds.length} booking(s)`);
+      })();
 
-      return payment;
+      return true;
     } catch (error) {
       console.error('Error handling payment success:', error);
       throw error;
@@ -217,10 +292,11 @@ class StripeService {
    */
   async handlePaymentFailure(session) {
     try {
-      const bookingId = session.client_reference_id;
+      const clientRef = session.client_reference_id;
+      const bookingIds = clientRef.includes(',') ? clientRef.split(',') : [clientRef];
 
-      // Update payment record
-      await Payment.findOneAndUpdate(
+      // Update ALL payment records
+      await Payment.updateMany(
         { stripeCheckoutSessionId: session.id },
         {
           status: 'FAILED',
@@ -228,13 +304,13 @@ class StripeService {
         }
       );
 
-      // Update booking status
-      await Booking.findByIdAndUpdate(bookingId, {
-        paymentStatus: 'FAILED',
-        status: 'CANCELLED'
-      });
+      // Update ALL bookings
+      await Booking.updateMany(
+        { _id: { $in: bookingIds } },
+        { paymentStatus: 'FAILED', status: 'CANCELLED' }
+      );
 
-      console.log(`❌ Payment failed for booking ${bookingId}`);
+      console.log(`❌ Payment failed for booking(s) ${bookingIds.join(', ')}`);
     } catch (error) {
       console.error('Error handling payment failure:', error);
       throw error;

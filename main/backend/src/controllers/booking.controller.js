@@ -35,6 +35,11 @@ const createBooking = async (req, res) => {
     return badRequest(res, 'Cannot book appointments in the past');
   }
 
+  // Prevent providers/organisers from booking appointments
+  if (req.user.role === 'PROVIDER' || req.user.role === 'ORGANISER') {
+    return badRequest(res, 'Providers and Organisers cannot book appointments as customers');
+  }
+
   // Get appointment type
   const appointmentType = await AppointmentType.findById(appointmentTypeId);
 

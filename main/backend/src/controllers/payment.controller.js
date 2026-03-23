@@ -66,6 +66,67 @@ const createCheckoutSession = async (req, res) => {
   }
 };
 
+// Create Stripe checkout session for MULTIPLE bookings at once
+const createMultiCheckoutSession = async (req, res) => {
+  const { bookingIds } = req.body;
+  const customerId = req.user._id;
+
+  if (!bookingIds || !Array.isArray(bookingIds) || bookingIds.length === 0) {
+    return badRequest(res, 'bookingIds array is required');
+  }
+
+  if (bookingIds.length > 20) {
+    return badRequest(res, 'Cannot checkout more than 20 bookings at once');
+  }
+
+  // Load all bookings
+  const bookings = await Booking.find({ _id: { $in: bookingIds } })
+    .populate('appointmentTypeId')
+    .populate('customerId');
+
+  if (bookings.length !== bookingIds.length) {
+    return notFound(res, 'One or more bookings not found');
+  }
+
+  // Validate ownership & status for every booking
+  for (const booking of bookings) {
+    if (booking.customerId._id.toString() !== customerId.toString()) {
+      return forbidden(res, 'You can only pay for your own bookings');
+    }
+    if (booking.paymentStatus === 'PAID') {
+      return badRequest(res, `Booking ${booking._id} has already been paid`);
+    }
+    if (booking.status === 'CANCELLED') {
+      return badRequest(res, `Booking ${booking._id} is cancelled`);
+    }
+    if (booking.appointmentTypeId.price === 0) {
+      return badRequest(res, `Booking ${booking._id} is free — no payment required`);
+    }
+  }
+
+  try {
+    const { sessionId, sessionUrl } = await stripeService.createMultiBookingCheckoutSession(
+      bookings,
+      bookings[0].customerId // they all share the same customer
+    );
+
+    // Mark all bookings as PROCESSING
+    await Booking.updateMany(
+      { _id: { $in: bookingIds } },
+      { paymentStatus: 'PROCESSING' }
+    );
+
+    return ok(res, 'Multi-booking checkout session created', {
+      sessionId,
+      sessionUrl,
+      bookingIds
+    });
+  } catch (error) {
+    console.error('Multi-checkout session creation failed:', error);
+    return badRequest(res, error.message);
+  }
+};
+
 // Create Stripe checkout session for guest bookings (no auth required)
 const createGuestCheckoutSession = async (req, res) => {
   const { bookingId, email } = req.body;
@@ -297,22 +358,25 @@ const verifyPayment = async (req, res) => {
   }
 
   try {
-    // Find payment by checkout session ID
-    let payment = await Payment.findOne({ stripeCheckoutSessionId: sessionId });
+    // Find ALL payment records for this checkout session (supports multi-booking)
+    const payments = await Payment.find({ stripeCheckoutSessionId: sessionId });
 
-    if (!payment) {
+    if (!payments || payments.length === 0) {
       return notFound(res, 'Payment not found');
     }
 
     // If already succeeded, return success
-    if (payment.status === 'SUCCEEDED') {
-      const booking = await Booking.findById(payment.bookingId)
+    if (payments[0].status === 'SUCCEEDED') {
+      const bookingIds = payments.map(p => p.bookingId);
+      const bookings = await Booking.find({ _id: { $in: bookingIds } })
         .populate('appointmentTypeId')
         .populate('providerId');
       
       return ok(res, 'Payment already verified', {
-        payment,
-        booking
+        payment: payments[0],
+        payments,
+        booking: bookings[0],
+        bookings
       });
     }
 
@@ -321,43 +385,52 @@ const verifyPayment = async (req, res) => {
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
     if (session.payment_status === 'paid') {
-      // Update payment record
-      payment = await Payment.findByIdAndUpdate(
-        payment._id,
+      // Update ALL payment records
+      await Payment.updateMany(
+        { stripeCheckoutSessionId: sessionId },
         {
           status: 'SUCCEEDED',
           stripePaymentIntentId: session.payment_intent,
           paidAt: new Date()
-        },
-        { new: true }
+        }
       );
 
-      // Update booking
-      const booking = await Booking.findByIdAndUpdate(
-        payment.bookingId,
-        {
-          paymentStatus: 'PAID',
-          status: 'CONFIRMED'
-        },
-        { new: true }
-      ).populate('appointmentTypeId').populate('providerId');
+      // Update ALL bookings
+      const bookingIds = payments.map(p => p.bookingId);
+      await Booking.updateMany(
+        { _id: { $in: bookingIds } },
+        { paymentStatus: 'PAID', status: 'CONFIRMED' }
+      );
+
+      const bookings = await Booking.find({ _id: { $in: bookingIds } })
+        .populate('appointmentTypeId')
+        .populate('providerId');
 
       // Get receipt URL
       if (session.payment_intent) {
-        const paymentIntent = await stripe.paymentIntents.retrieve(session.payment_intent);
-        if (paymentIntent.latest_charge) {
-          const charge = await stripe.charges.retrieve(paymentIntent.latest_charge);
-          if (charge.receipt_url) {
-            await Payment.findByIdAndUpdate(payment._id, { receiptUrl: charge.receipt_url });
+        try {
+          const paymentIntent = await stripe.paymentIntents.retrieve(session.payment_intent);
+          if (paymentIntent.latest_charge) {
+            const charge = await stripe.charges.retrieve(paymentIntent.latest_charge);
+            if (charge.receipt_url) {
+              await Payment.updateMany(
+                { stripeCheckoutSessionId: sessionId },
+                { receiptUrl: charge.receipt_url }
+              );
+            }
           }
+        } catch (e) {
+          console.error('Could not fetch receipt URL:', e.message);
         }
       }
 
-      console.log(`✅ Payment verified and confirmed for session ${sessionId}`);
+      console.log(`✅ Payment verified and confirmed for session ${sessionId} (${bookings.length} booking(s))`);
 
       return ok(res, 'Payment verified successfully', {
-        payment,
-        booking
+        payment: payments[0],
+        payments,
+        booking: bookings[0],
+        bookings
       });
     } else {
       return badRequest(res, `Payment not completed. Status: ${session.payment_status}`);
@@ -370,6 +443,7 @@ const verifyPayment = async (req, res) => {
 
 module.exports = {
   createCheckoutSession,
+  createMultiCheckoutSession,
   createGuestCheckoutSession,
   handleWebhook,
   getPaymentByBookingId,
