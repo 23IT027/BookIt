@@ -1,7 +1,6 @@
 # 📅 BookIt - Appointment Booking System
 
-## Video Link : https://drive.google.com/file/d/17L9MiVmqzUkyc0_oYX5d5KwI_zNBc41t/view?usp=sharing
-<div align="center">
+
 
 ![BookEase](https://img.shields.io/badge/BookEase-Appointment%20Booking-00CED1?style=for-the-badge&logo=calendar&logoColor=white)
 
